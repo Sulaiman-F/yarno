@@ -84,7 +84,7 @@ function Login() {
               />
 
               <PasswordInput
-                placeholder="Enter Password"
+                placeholder="Password"
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
                 leftSection={<TbLockPassword size={16} />}

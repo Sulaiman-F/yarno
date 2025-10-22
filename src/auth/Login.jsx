@@ -94,7 +94,7 @@ function Login() {
                 className="w-72"
               />
 
-              <p>
+              <p className="text-sm text-gray-500">
                 Don't have an account?{" "}
                 <Link
                   className="hover:underline cursor-pointer hover:text-sky-600"

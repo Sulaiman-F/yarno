@@ -7,10 +7,18 @@ import UsersPage from "../pages/UsersPage";
 import UsersDetails from "../pages/UsersDetails";
 import Setting from "../pages/Setting";
 import Activity from "../pages/Activity";
+import SideBar from "../components/SideBar";
 function Layout() {
   return (
     <ProtectedRoute>
-      <Outlet />
+      <div className="flex flex-col md:flex-row">
+        <div className=" md:w-1/5 w-full h-16 md:h-full">
+          <SideBar />
+        </div>
+        <div className="md:w-4/5 w-full ">
+          <Outlet />
+        </div>
+      </div>
     </ProtectedRoute>
   );
 }

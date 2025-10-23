@@ -1,9 +1,10 @@
 import React from "react";
 import { useDisclosure } from "@mantine/hooks";
-import { Burger, NavLink, Space } from "@mantine/core";
+import { Burger, NavLink, Button } from "@mantine/core";
 import { FaUsers, FaUser, FaCog, FaChartBar } from "react-icons/fa";
 import { Link, useLocation } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
+import { CiLogout } from "react-icons/ci";
 
 function SideBar() {
   const [opened, { toggle }] = useDisclosure(false);
@@ -56,7 +57,7 @@ function SideBar() {
           </motion.span>
           <motion.span
             {...framerText(3)}
-            className="h-full flex items-end justify-end"
+            className="h-full flex flex-col items-end justify-end"
           >
             <NavLink
               component={Link}
@@ -66,6 +67,26 @@ function SideBar() {
               active={location.pathname === "/settings"}
               className="rounded-2xl"
             />
+            <motion.span {...framerText(4)} className="w-full">
+              <Button
+                component={Link}
+                to="/login"
+                fullWidth
+                justify="start"
+                leftSection={<CiLogout size={20} />}
+                className="rounded-2xl w-full"
+                color="red"
+                variant="light"
+                onClick={() => {
+                  localStorage.removeItem("username");
+                  localStorage.removeItem("email");
+                  localStorage.removeItem("role");
+                  localStorage.removeItem("id");
+                }}
+              >
+                Logout
+              </Button>
+            </motion.span>
           </motion.span>
         </div>
       </div>
@@ -132,6 +153,26 @@ function SideBar() {
                   className="rounded-2xl"
                   onClick={() => window.innerWidth < 768 && toggle()}
                 />
+              </motion.span>
+              <motion.span {...framerText(4)}>
+                <Button
+                  component={Link}
+                  to="/login"
+                  fullWidth
+                  justify="start"
+                  leftSection={<CiLogout size={20} />}
+                  className="rounded-2xl w-full"
+                  color="red"
+                  variant="light"
+                  onClick={() => {
+                    localStorage.removeItem("username");
+                    localStorage.removeItem("email");
+                    localStorage.removeItem("role");
+                    localStorage.removeItem("id");
+                  }}
+                >
+                  Logout
+                </Button>
               </motion.span>
             </motion.div>
           )}

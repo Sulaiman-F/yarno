@@ -2,15 +2,16 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import { Navigate } from "react-router";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
+import ProtectedRoute from "../auth/ProtectedRoute";
 import UsersPage from "../pages/UsersPage";
 import UsersDetails from "../pages/UsersDetails";
 import Setting from "../pages/Setting";
 import Activity from "../pages/Activity";
 function Layout() {
   return (
-    <>
+    <ProtectedRoute>
       <Outlet />
-    </>
+    </ProtectedRoute>
   );
 }
 

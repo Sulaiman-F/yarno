@@ -31,7 +31,9 @@ function Login() {
       setLoading(true);
       const response = await axios.get(API);
       const users = response.data;
-      const foundEmail = users.find((u) => u.email === user.email);
+      const foundEmail = users.find(
+        (u) => u.email === user.email.toLocaleLowerCase()
+      );
       if (!foundEmail) {
         toast.error("Email not found please register", { duration: 1500 });
         setLoading(false);
@@ -56,7 +58,7 @@ function Login() {
   };
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" />
       <div className="flex flex-col md:flex-row items-center justify-center h-screen ">
         <div className="hidden lg:flex flex-col gap-y-5 items-center justify-center bg-gradient-to-br from-sky-400 to-sky-600 text-white h-full w-1/2 rounded-r-4xl">
           <h1 className="lg:text-2xl 2xl:text-3xl">Welcome back!</h1>

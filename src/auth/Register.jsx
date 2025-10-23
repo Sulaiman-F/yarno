@@ -82,7 +82,7 @@ function Register() {
       }
       await axios.post(API, {
         username: user.username,
-        email: user.email,
+        email: user.email.toLocaleLowerCase(),
         password: user.password,
         role: "member",
         createAt: new Date().toISOString(),
@@ -101,7 +101,7 @@ function Register() {
   };
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" />
       <div className="flex flex-col md:flex-row items-center justify-center h-screen">
         <div className="hidden md:flex flex-col gap-y-5 items-center justify-center bg-gradient-to-bl from-sky-400 to-sky-600 text-white h-full w-1/2 rounded-r-4xl">
           <h1 className="lg:text-2xl 2xl:text-3xl">Welcome</h1>

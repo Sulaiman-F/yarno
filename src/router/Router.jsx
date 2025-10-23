@@ -12,7 +12,7 @@ function Layout() {
   return (
     <ProtectedRoute>
       <div className="flex flex-col md:flex-row">
-        <div className=" md:w-1/5 w-full h-16 md:h-full">
+        <div className=" md:w-1/5 w-full h-14 md:h-full">
           <SideBar />
         </div>
         <div className="md:w-4/5 w-full ">

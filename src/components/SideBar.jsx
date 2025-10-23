@@ -70,24 +70,24 @@ function SideBar() {
         </div>
       </div>
       {/* Mobile Sidebar */}
-      <div
-        className={`fixed w-full flex flex-col items-start md:h-screen max-h-screen rounded-r-lg bg-white md:hidden `}
-      >
-        <Burger
-          opened={opened}
-          onClick={toggle}
-          aria-label="Toggle navigation"
-          className="md:hidden m-4"
-        />
+      <AnimatePresence>
+        <motion.div
+          className={`fixed w-full bg-white flex flex-col p-2 items-start md:h-screen max-h-screen md:hidden z-10 `}
+        >
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            aria-label="Toggle navigation"
+            className="md:hidden m-1"
+          />
 
-        <AnimatePresence>
           {opened && (
             <motion.div
               initial={{ x: "-100%", opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: "-100%", opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className={`flex flex-col w-full h-full gap-2 px-2 md:py-2 `}
+              className={`flex flex-col w-full h-full gap-2 bg-white `}
             >
               <motion.span {...framerText(0)}>
                 <NavLink
@@ -135,8 +135,8 @@ function SideBar() {
               </motion.span>
             </motion.div>
           )}
-        </AnimatePresence>
-      </div>
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }

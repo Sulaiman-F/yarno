@@ -406,19 +406,19 @@ function UsersDetails() {
                 {[...Array(usersPerPage)].map((_, index) => (
                   <Table.Tr key={index}>
                     <Table.Td>
-                      <Skeleton height={20} width={30} />
+                      <Skeleton height={30} width={30} />
                     </Table.Td>
                     <Table.Td>
-                      <Skeleton height={20} width={150} />
+                      <Skeleton height={30} width={150} />
                     </Table.Td>
                     <Table.Td>
-                      <Skeleton height={20} width={100} />
+                      <Skeleton height={30} width={100} />
                     </Table.Td>
                     <Table.Td className="hidden md:table-cell">
-                      <Skeleton height={20} width={80} />
+                      <Skeleton height={30} width={80} />
                     </Table.Td>
                     <Table.Td>
-                      <Skeleton height={20} width={100} />
+                      <Skeleton height={30} width={100} />
                     </Table.Td>
                   </Table.Tr>
                 ))}

@@ -1,5 +1,5 @@
 @import "@mantine/core/styles.css";
-
+@import "@mantine/charts/styles.css";
 /* Your custom styles here */
 body {
   margin: 0;

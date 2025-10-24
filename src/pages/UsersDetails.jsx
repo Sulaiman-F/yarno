@@ -119,7 +119,7 @@ function UsersDetails() {
     setCurrentPage(1);
   };
 
-  const handleSubmit = async () => {
+  const handleAddUser = async () => {
     if (!newUser.username) {
       toast.error("Please fill in Username field", { duration: 1500 });
       return;
@@ -160,12 +160,18 @@ function UsersDetails() {
       });
       return;
     }
+    if (!newUser.role) {
+      toast.error("Please select a role", { duration: 1500 });
+      return;
+    }
     try {
-      const userExists = users.some(
-        (existingUser) => existingUser.username === newUser.username
+      const userExists = users.find(
+        (existingUser) =>
+          existingUser.username === newUser.username.toLocaleLowerCase()
       );
-      const emailExists = users.some(
-        (existingUser) => existingUser.email === newUser.email
+      const emailExists = users.find(
+        (existingUser) =>
+          existingUser.email === newUser.email.toLocaleLowerCase()
       );
       if (userExists) {
         toast.error("Username already exists", { duration: 1500 });
@@ -175,7 +181,7 @@ function UsersDetails() {
         toast.error("Email already registered", { duration: 1500 });
         return;
       }
-      await axios.post(API_Users, {
+      const response = await axios.post(API_Users, {
         username: newUser.username,
         email: newUser.email.toLocaleLowerCase(),
         password: newUser.password,
@@ -183,6 +189,19 @@ function UsersDetails() {
         createAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       });
+      const by =
+        localStorage.getItem("username") +
+        " (" +
+        localStorage.getItem("role") +
+        ")";
+      await axios.post(API_Activities, {
+        userId: response.data.id,
+        action: "create",
+        description: `User ${newUser.username} created`,
+        by: by,
+        timestamp: new Date().toISOString(),
+      });
+
       toast.success("Registration successful", { duration: 1500 });
       setNewUser({
         username: "",
@@ -226,17 +245,45 @@ function UsersDetails() {
       toast.error("Passwords do not match", { duration: 1500 });
       return;
     }
-
     try {
       const updateData = {};
-      if (newUser.username.trim()) updateData.username = newUser.username;
-      if (newUser.email.trim()) updateData.email = newUser.email.toLowerCase();
-      if (newUser.password.trim()) updateData.password = newUser.password;
-      if (newUser.role) updateData.role = newUser.role;
+      const descriptionParts = [];
+      if (newUser.username.trim()) {
+        updateData.username = newUser.username;
+        descriptionParts.push(`username to ${newUser.username}`);
+      }
+      if (newUser.email.trim()) {
+        updateData.email = newUser.email.toLowerCase();
+        descriptionParts.push(`email to ${newUser.email}`);
+      }
+      if (newUser.password.trim()) {
+        updateData.password = newUser.password;
+        descriptionParts.push(`password to ${newUser.password}`);
+      }
+      if (newUser.role) {
+        updateData.role = newUser.role;
+        descriptionParts.push(`role to ${newUser.role}`);
+      }
 
       updateData.updatedAt = new Date().toISOString();
 
       await axios.put(`${API_Users}/${editingUser.id}`, updateData);
+
+      const by =
+        localStorage.getItem("username") +
+        " (" +
+        localStorage.getItem("role") +
+        ")";
+      const description = `User ${
+        editingUser.username
+      } updated: ${descriptionParts.join(", ")}`;
+      await axios.post(API_Activities, {
+        userId: editingUser.id,
+        action: "update",
+        description: description,
+        by: by,
+        timestamp: new Date().toISOString(),
+      });
 
       toast.success("User updated successfully", { duration: 1500 });
       setNewUser({
@@ -309,10 +356,21 @@ function UsersDetails() {
   const deleteUser = async (userId) => {
     try {
       await axios.delete(`${API_Users}/${userId}`);
-      toast.success("User deleted successfully", { duration: 1500 });
 
-      // Refresh users list
+      const activitiesResponse = await axios.get(API_Activities);
+      const userActivities = activitiesResponse.data.filter(
+        (activity) => activity.userId === userId
+      );
+
+      for (const activity of userActivities) {
+        await axios.delete(`${API_Activities}/${activity.id}`);
+      }
+
+      toast.success("User deleted successfully", {
+        duration: 1500,
+      });
       await fetchUsers();
+      await fetchActivities(); // Refresh activities to update the count
     } catch (err) {
       console.log(err);
       toast.error("Failed to delete user", { duration: 1500 });
@@ -429,11 +487,11 @@ function UsersDetails() {
                   <Table.Tr key={u.id}>
                     <Table.Td>{u.id}</Table.Td>
                     <Table.Td>{u.email}</Table.Td>
-                    <Table.Td>{u.username}</Table.Td>
+                    <Table.Td className="break-all">{u.username}</Table.Td>
                     <Table.Td className="hidden md:table-cell">
                       {u.role}
                     </Table.Td>
-                    <Table.Td className=" space-x-2">
+                    <Table.Td className="space-x-2 space-y-1">
                       {localStorage.getItem("role") === "admin" ||
                       localStorage.getItem("id") === u.id ? (
                         <ActionIcon
@@ -492,7 +550,7 @@ function UsersDetails() {
             placeholder="Username"
             value={newUser.username}
             onChange={(e) =>
-              setNewUser({ ...newUser, username: e.target.value })
+              setNewUser({ ...newUser, username: e.target.value.trim() })
             }
             leftSection={<FaUserAlt size={14} />}
             variant="filled"
@@ -503,7 +561,9 @@ function UsersDetails() {
           <Input
             placeholder="Email"
             value={newUser.email}
-            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+            onChange={(e) =>
+              setNewUser({ ...newUser, email: e.target.value.trim() })
+            }
             leftSection={<MdAlternateEmail size={16} />}
             variant="filled"
             radius="md"
@@ -514,7 +574,7 @@ function UsersDetails() {
             placeholder="Password"
             value={newUser.password}
             onChange={(e) =>
-              setNewUser({ ...newUser, password: e.target.value })
+              setNewUser({ ...newUser, password: e.target.value.trim() })
             }
             leftSection={<TbLockPassword size={16} />}
             visible={visible}
@@ -530,7 +590,7 @@ function UsersDetails() {
             onChange={(e) =>
               setNewUser({
                 ...newUser,
-                confirmPassword: e.target.value,
+                confirmPassword: e.target.value.trim(),
               })
             }
             leftSection={<TbLockPassword size={20} />}
@@ -547,6 +607,7 @@ function UsersDetails() {
             size="md"
             radius="md"
             defaultValue="admin"
+            color="blue"
             data={[
               { value: "Admin", label: "Admin" },
               { value: "Member", label: "Member" },
@@ -564,10 +625,10 @@ function UsersDetails() {
             variant="filled"
             radius="md"
             size="compact-lg"
-            onClick={handleSubmit}
+            onClick={handleAddUser}
             loaderProps={{ type: "dots" }}
             fullWidth={true}
-            style={{ width: "25%" }}
+            style={{ width: "50%" }}
           >
             Add User
           </Button>
@@ -584,7 +645,7 @@ function UsersDetails() {
             placeholder="New Username"
             value={newUser.username}
             onChange={(e) =>
-              setNewUser({ ...newUser, username: e.target.value })
+              setNewUser({ ...newUser, username: e.target.value.trim() })
             }
             leftSection={<FaUserAlt size={14} />}
             variant="filled"
@@ -595,7 +656,9 @@ function UsersDetails() {
           <Input
             placeholder="New Email"
             value={newUser.email}
-            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+            onChange={(e) =>
+              setNewUser({ ...newUser, email: e.target.value.trim() })
+            }
             leftSection={<MdAlternateEmail size={16} />}
             variant="filled"
             radius="md"
@@ -606,7 +669,7 @@ function UsersDetails() {
             placeholder="New Password"
             value={newUser.password}
             onChange={(e) =>
-              setNewUser({ ...newUser, password: e.target.value })
+              setNewUser({ ...newUser, password: e.target.value.trim() })
             }
             leftSection={<TbLockPassword size={16} />}
             visible={visible}
@@ -622,7 +685,7 @@ function UsersDetails() {
             onChange={(e) =>
               setNewUser({
                 ...newUser,
-                confirmPassword: e.target.value,
+                confirmPassword: e.target.value.trim(),
               })
             }
             leftSection={<TbLockPassword size={20} />}
@@ -660,7 +723,7 @@ function UsersDetails() {
             onClick={handleEditUser}
             loaderProps={{ type: "dots" }}
             fullWidth={true}
-            style={{ width: "25%" }}
+            style={{ width: "50%" }}
             color="yellow"
           >
             Edit User

@@ -11,6 +11,8 @@ import { useDisclosure } from "@mantine/hooks";
 
 function Register() {
   const API = "https://68f8eaf7deff18f212b80afe.mockapi.io/Users";
+  const API_Activities =
+    "https://68f8eaf7deff18f212b80afe.mockapi.io/Activities";
   const navigate = useNavigate();
   const [user, setUser] = useState({
     username: "",
@@ -64,11 +66,12 @@ function Register() {
       setLoading(true);
       const response = await axios.get(API);
       const existingUsers = response.data;
-      const userExists = existingUsers.some(
-        (existingUser) => existingUser.username === user.username
+      const userExists = existingUsers.find(
+        (existingUser) =>
+          existingUser.username === user.username.toLocaleLowerCase()
       );
-      const emailExists = existingUsers.some(
-        (existingUser) => existingUser.email === user.email
+      const emailExists = existingUsers.find(
+        (existingUser) => existingUser.email === user.email.toLocaleLowerCase()
       );
       if (userExists) {
         toast.error("Username already exists", { duration: 1500 });
@@ -80,7 +83,7 @@ function Register() {
         setLoading(false);
         return;
       }
-      await axios.post(API, {
+      const createdUser = await axios.post(API, {
         username: user.username,
         email: user.email.toLocaleLowerCase(),
         password: user.password,
@@ -88,13 +91,21 @@ function Register() {
         createAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       });
+
+      await axios.post(API_Activities, {
+        userId: createdUser.data.id,
+        action: "create",
+        description: `User ${user.username} created`,
+        by: `${user.username} (member)`,
+        timestamp: new Date().toISOString(),
+      });
       toast.success("Registration successful", { duration: 1500 });
       setLoading(false);
       localStorage.setItem("username", user.username);
       localStorage.setItem("email", user.email);
       localStorage.setItem("role", user.role);
       localStorage.setItem("id", user.id);
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }

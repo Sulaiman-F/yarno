@@ -77,7 +77,9 @@ function Login() {
               <Input
                 placeholder="Your email"
                 value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                onChange={(e) =>
+                  setUser({ ...user, email: e.target.value.trim() })
+                }
                 leftSection={<MdAlternateEmail size={16} />}
                 variant="filled"
                 radius="md"
@@ -88,7 +90,9 @@ function Login() {
               <PasswordInput
                 placeholder="Password"
                 value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                onChange={(e) =>
+                  setUser({ ...user, password: e.target.value.trim() })
+                }
                 leftSection={<TbLockPassword size={16} />}
                 variant="filled"
                 radius="md"

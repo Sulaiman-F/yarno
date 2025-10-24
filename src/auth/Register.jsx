@@ -119,7 +119,9 @@ function Register() {
               <Input
                 placeholder="Your Username"
                 value={user.username}
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                onChange={(e) =>
+                  setUser({ ...user, username: e.target.value.trim() })
+                }
                 leftSection={<FaUserAlt size={14} />}
                 variant="filled"
                 radius="md"
@@ -129,7 +131,9 @@ function Register() {
               <Input
                 placeholder="Your email"
                 value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                onChange={(e) =>
+                  setUser({ ...user, email: e.target.value.trim() })
+                }
                 leftSection={<MdAlternateEmail size={16} />}
                 variant="filled"
                 radius="md"
@@ -141,7 +145,7 @@ function Register() {
                   placeholder="Password"
                   value={user.password}
                   onChange={(e) =>
-                    setUser({ ...user, password: e.target.value })
+                    setUser({ ...user, password: e.target.value.trim() })
                   }
                   leftSection={<TbLockPassword size={16} />}
                   visible={visible}
@@ -155,7 +159,7 @@ function Register() {
                   placeholder="Confirm password"
                   value={user.confirmPassword}
                   onChange={(e) =>
-                    setUser({ ...user, confirmPassword: e.target.value })
+                    setUser({ ...user, confirmPassword: e.target.value.trim() })
                   }
                   leftSection={<TbLockPassword size={16} />}
                   visible={visible}

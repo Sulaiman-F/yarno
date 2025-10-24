@@ -57,7 +57,7 @@ function SideBar() {
           </motion.span>
           <motion.span
             {...framerText(3)}
-            className="h-full flex flex-col items-end justify-end"
+            className="h-full flex flex-col  gap-2  items-end justify-end"
           >
             <NavLink
               component={Link}

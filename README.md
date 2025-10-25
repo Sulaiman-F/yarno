@@ -1,16 +1,93 @@
-# React + Vite
+# Yarno - User Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive user management dashboard built with React, featuring user authentication, CRUD operations,and activity tracking.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[**Live Demo**](https://yarno.onrender.com)
 
-## React Compiler
+## 📋 Project Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Yarno is a comprehensive user management system that provides:
 
-## Expanding the ESLint configuration
+- **User Authentication** - Secure login/logout with role-based access
+- **User Management** - Full CRUD operations for user accounts
+- **Activity Tracking** - Real-time activity logging and visualization
+- **Role Management** - Admin and Member role permissions
+- **Responsive Design** - Mobile-first responsive interface
+- **Interactive Charts** - Weekly activity analytics with Mantine Charts
+- **Modern UI** - Clean interface using Mantine components and TailwindCSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- **React 19** - Latest React version with modern features
+- **Vite** - Fast build tool and development server
+- **Mantine** - Modern React components library
+- **TailwindCSS** - Utility-first CSS framework
+- **Framer Motion** - Smooth animations and transitions
+- **React Router** - Client-side routing
+- **Axios** - HTTP client for API requests
+- **React Hot Toast** - Beautiful toast notifications
+- **React Icons** - Beautiful icons for React applications
+
+## 🚀 Setup Instructions
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/Sulaiman-F/yarno.git
+   cd yarno
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**
+
+   ```bash
+   npm run build
+   ```
+
+5. **Preview production build**
+   ```bash
+   npm run preview
+   ```
+
+## 🌐 API Endpoints
+
+The application uses MockAPI for backend services:
+
+### Base URLs
+
+- **Users API**: `https://68f8eaf7deff18f212b80afe.mockapi.io/Users`
+- **Activities API**: `https://68f8eaf7deff18f212b80afe.mockapi.io/Activities`
+
+## 👥 Test Accounts
+
+### Admin Account
+
+- **Email**: `admin@gmail.com`
+- **Password**: `admin123`
+- **Permissions**: Full access to all features.
+
+### Member Account
+
+- **Email**: `Sulaiman@gmail.com`
+- **Password**: `123123`
+- **Permissions**: Limited access.

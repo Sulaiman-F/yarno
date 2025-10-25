@@ -15,7 +15,7 @@ import { Toaster } from "react-hot-toast";
 import { BarChart } from "@mantine/charts";
 import StatCard from "../components/StatCard";
 import { FaChartSimple } from "react-icons/fa6";
-
+import { motion } from "framer-motion";
 function Activity() {
   const API_Activities =
     "https://68f8eaf7deff18f212b80afe.mockapi.io/Activities";
@@ -113,7 +113,12 @@ function Activity() {
     <>
       <Toaster position="top-center" />
       <div className="bg-[#f1f1f1] min-h-screen p-2 flex flex-col gap-5">
-        <div className="flex flex-col bg-white rounded-lg p-2 gap-3 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="flex flex-col bg-white rounded-lg p-2 gap-3 px-4"
+        >
           <div className="flex items-center justify-between border-b-2 pb-2 border-gray-300">
             <h2 className="font-semibold text-xl md:text-2xl lg:text-3xl 2xl:text-4xl">
               Weekly Activity Overview
@@ -143,8 +148,13 @@ function Activity() {
               />
             </div>
           </div>
-        </div>
-        <div className="flex flex-col bg-white rounded-lg p-2 gap-3 px-4">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="flex flex-col bg-white rounded-lg p-2 gap-3 px-4"
+        >
           <div className="flex items-center justify-between border-b-2 pb-2 border-gray-300">
             <h1 className="font-semibold text-xl md:text-2xl lg:text-3xl 2xl:text-4xl">
               Activities
@@ -238,7 +248,7 @@ function Activity() {
             siblings={1}
             className="w-full flex justify-center"
           />
-        </div>
+        </motion.div>
       </div>
     </>
   );

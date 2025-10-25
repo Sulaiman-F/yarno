@@ -11,6 +11,7 @@ import {
   Skeleton,
 } from "@mantine/core";
 import { FaUser, FaEnvelope, FaUserTag, FaCalendarAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 function UsersPage() {
   const API_Users = "https://68f8eaf7deff18f212b80afe.mockapi.io/Users";
   const [userProfile, setUserProfile] = useState(null);
@@ -35,7 +36,12 @@ function UsersPage() {
   return (
     <div className="bg-[#f1f1f1] min-h-screen p-2 flex flex-col gap-5">
       <div className="flex justify-center items-center">
-        <div className="w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="w-full"
+        >
           {loadingProfile ? (
             <div className="flex flex-col justify-center md:justify-start items-center gap-5 md:gap-0 md:flex-row shadow-lg rounded-xl w-full p-6 bg-white ">
               <div className="flex justify-center md:justify-start w-full md:w-1/6">
@@ -118,7 +124,7 @@ function UsersPage() {
               </div>
             </Card>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

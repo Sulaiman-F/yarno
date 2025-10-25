@@ -30,6 +30,29 @@ Yarno is a comprehensive user management system that provides:
 - **React Hot Toast** - Beautiful toast notifications
 - **React Icons** - Beautiful icons for React applications
 
+## 🌐 API Endpoints
+
+The application uses MockAPI for backend services:
+
+### Base URLs
+
+- **Users API**: `https://68f8eaf7deff18f212b80afe.mockapi.io/Users`
+- **Activities API**: `https://68f8eaf7deff18f212b80afe.mockapi.io/Activities`
+
+## 👥 Test Accounts
+
+### Admin Account
+
+- **Email**: `admin@gmail.com`
+- **Password**: `admin123`
+- **Permissions**: Full access to all features.
+
+### Member Account
+
+- **Email**: `Sulaiman@gmail.com`
+- **Password**: `123123`
+- **Permissions**: Limited access.
+
 ## 🚀 Setup Instructions
 
 ### Prerequisites
@@ -68,26 +91,3 @@ Yarno is a comprehensive user management system that provides:
    ```bash
    npm run preview
    ```
-
-## 🌐 API Endpoints
-
-The application uses MockAPI for backend services:
-
-### Base URLs
-
-- **Users API**: `https://68f8eaf7deff18f212b80afe.mockapi.io/Users`
-- **Activities API**: `https://68f8eaf7deff18f212b80afe.mockapi.io/Activities`
-
-## 👥 Test Accounts
-
-### Admin Account
-
-- **Email**: `admin@gmail.com`
-- **Password**: `admin123`
-- **Permissions**: Full access to all features.
-
-### Member Account
-
-- **Email**: `Sulaiman@gmail.com`
-- **Password**: `123123`
-- **Permissions**: Limited access.

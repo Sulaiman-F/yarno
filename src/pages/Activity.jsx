@@ -13,6 +13,8 @@ import { TbArrowsSort } from "react-icons/tb";
 import { IoIosSearch } from "react-icons/io";
 import { Toaster } from "react-hot-toast";
 import { BarChart } from "@mantine/charts";
+import StatCard from "../components/StatCard";
+import { FaChartSimple } from "react-icons/fa6";
 
 function Activity() {
   const API_Activities =
@@ -117,7 +119,17 @@ function Activity() {
               Weekly Activity Overview
             </h2>
           </div>
-          <div className="w-full flex justify-center items-center">
+          <div className="w-full flex flex-col gap-4 md:flex-row justify-between ">
+            <div className="flex flex-col lg:w-1/2 w-full gap-5 ">
+              <h1 className="font-semibold text-lg md:text-xl lg:text-2xl 2xl:text-3xl">
+                {localStorage.getItem("username")}'s Activity Summary
+              </h1>
+              <StatCard
+                title="Total Activities"
+                value={activityData.length}
+                icon={FaChartSimple}
+              />
+            </div>
             <div className="flex justify-center items-center w-full lg:w-1/2">
               <BarChart
                 h={200}

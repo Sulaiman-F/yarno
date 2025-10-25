@@ -80,14 +80,3 @@ The application uses MockAPI for backend services:
    ```bash
    npm run dev
    ```
-
-4. **Build for production**
-
-   ```bash
-   npm run build
-   ```
-
-5. **Preview production build**
-   ```bash
-   npm run preview
-   ```

@@ -251,10 +251,26 @@ function UsersDetails() {
       const descriptionParts = [];
       if (newUser.username.trim()) {
         updateData.username = newUser.username;
+        const userExists = users.find(
+          (existingUser) =>
+            existingUser.username === updateData.username.toLocaleLowerCase()
+        );
+        if (userExists) {
+          toast.error("Username already exists", { duration: 1500 });
+          return;
+        }
         descriptionParts.push(`username to ${newUser.username}`);
       }
       if (newUser.email.trim()) {
         updateData.email = newUser.email.toLowerCase();
+        const emailExists = users.find(
+          (existingUser) =>
+            existingUser.email === updateData.email.toLocaleLowerCase()
+        );
+        if (emailExists) {
+          toast.error("Email already registered", { duration: 1500 });
+          return;
+        }
         descriptionParts.push(`email to ${newUser.email}`);
       }
       if (newUser.password.trim()) {

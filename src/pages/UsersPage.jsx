@@ -1,15 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Card,
-  Avatar,
-  Badge,
-  Text,
-  Group,
-  Stack,
-  Skeleton,
-} from "@mantine/core";
+import { Card, Avatar, Text, Group, Stack, Skeleton } from "@mantine/core";
 import { FaUser, FaEnvelope, FaUserTag, FaCalendarAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 function UsersPage() {
@@ -74,7 +66,6 @@ function UsersPage() {
                   </Text>
                 </Group>
 
-                {/* Username */}
                 <Group spacing="sm">
                   <FaUser className="text-gray-600" size={16} />
                   <Text size="md" color="dimmed">
@@ -83,7 +74,6 @@ function UsersPage() {
                   <Text size="md">{userProfile.username}</Text>
                 </Group>
 
-                {/* Role */}
                 <Group spacing="sm">
                   <FaUserTag className="text-gray-600" size={16} />
                   <Text size="md" color="dimmed">
@@ -94,7 +84,6 @@ function UsersPage() {
                   </Text>
                 </Group>
 
-                {/* Join Date */}
                 <Group spacing="sm">
                   <FaCalendarAlt className="text-gray-600" size={16} />
                   <Text size="md" color="dimmed">
